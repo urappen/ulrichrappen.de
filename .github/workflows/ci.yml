@@ -1,0 +1,80 @@
+name: ci
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/ci.yml'
+      - 'docs/**'
+  workflow_dispatch:
+  # inputs:
+  #   logLevel:
+  #     description: 'Log level'
+  #     required: true
+  #     default: 'warning'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    if: github.repository == 'urappen/ulrichrappen.de'
+    runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.optional }}
+    timeout-minutes: 15 # default is 6 hours!
+    strategy:
+      max-parallel: 1
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            node-version: 'latest'
+            optional: false
+    name: Build (Vitepress ${{ matrix.os }}, node ${{ matrix.node-version }})
+    steps:
+
+      - name: Git config
+        run: |
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git config --global user.name 'github-actions[bot]'
+          git config --global init.defaultBranch main
+
+      # https://github.com/actions/checkout
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      # https://github.com/pnpm/action-setup
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
+
+      # https://github.com/actions/setup-node
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node-version }}
+          package-manager-cache: false
+
+      - name: Install deps
+        run: |
+          pnpm install
+
+      - name: Check deps
+        run: |
+          pnpm list --recursive
+          pnpm licenses list
+          pnpm outdated --recursive
+
+      - name: Check pnpm
+        run: |
+          pnpm doctor
+
+      - name: Build docs
+        run: |
+          pnpm run docs-build

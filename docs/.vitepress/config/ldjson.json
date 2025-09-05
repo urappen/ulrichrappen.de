@@ -1,0 +1,30 @@
+{
+    "@context": "http://schema.org",
+    "@type": "PhysiciansOffice",
+    "@id": "https://ulrichrappen.de",
+    "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Mitteläckerring 39",
+        "addressLocality": "Baden-Baden",
+        "addressRegion": "Baden-Württemberg",
+        "postalCode": "76532",
+        "addressCountry": "DE"
+    },
+    "currenciesAccepted": "EUR",
+    "description": "Kinder- und Jugendpsychiatrie, Psychotherapie",
+    "email": "info@ulrichrappen.de",
+    "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 48.7912438,
+        "longitude": 8.2287341
+    },
+    "image": [
+        "https://ulrichrappen.de/images/social/Dr_Ulrich_Rappen.16x9.webp"
+    ],
+    "logo": "https://ulrichrappen.de/images/logo.svg",
+    "medicalSpecialty": "Physiotherapy",
+    "name": "Dr. Ulrich Rappen",
+    "paymentAccepted": "Cash",
+    "telephone": "+491713280286",
+    "url": "https://ulrichrappen.de/"
+}

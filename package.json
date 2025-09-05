@@ -1,0 +1,36 @@
+{
+    "name": "ulrichrappen-de-website",
+    "private": true,
+    "type": "module",
+    "author": {
+        "name": "Ulrich Rappen",
+        "email": "mail@ulrichrappen.de"
+    },
+    "homepage": "https://ulrichrappen.de/",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/urappen/ulrichrappen.de.git"
+    },
+    "bugs": {
+        "url": "https://github.com/urappen/ulrichrappen.de/issues/",
+        "email": "mail@ulrichrappen.de"
+    },
+    "license": "ISC",
+    "scripts": {
+        "docs-build": "vitepress build ./docs"
+    },
+    "packageManager": "pnpm@10.15.0",
+    "pnpm": {
+        "peerDependencyRules": {
+            "ignoreMissing": [
+                "@algolia/client-search",
+                "search-insights"
+            ]
+        }
+    },
+    "devDependencies": {
+        "@types/node": "latest",
+        "sass-embedded": "latest",
+        "vitepress": "latest"
+    }
+}

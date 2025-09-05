@@ -1,0 +1,97 @@
+name: cd
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/cd.yml'
+      - 'docs/**'
+  workflow_dispatch:
+  # inputs:
+  #   logLevel:
+  #     description: 'Log level'
+  #     required: true
+  #     default: 'warning'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: github.repository == 'urappen/ulrichrappen.de'
+    runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.optional }}
+    timeout-minutes: 15 # default is 6 hours!
+    strategy:
+      max-parallel: 1
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            node-version: 'latest'
+            optional: false
+    name: Deploy (Vitepress, ${{ matrix.os }}, node ${{ matrix.node-version }})
+    steps:
+
+      - name: Git config
+        run: |
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git config --global user.name 'github-actions[bot]'
+          git config --global init.defaultBranch main
+
+      # https://github.com/actions/checkout
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      # https://github.com/pnpm/action-setup
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
+
+      # https://github.com/actions/setup-node
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node-version }}
+          package-manager-cache: false
+
+      - name: Install deps
+        run: |
+          pnpm install
+
+      - name: Check deps
+        run: |
+          pnpm list --recursive
+          pnpm licenses list
+          pnpm outdated --recursive
+
+      - name: Check pnpm
+        run: |
+          pnpm doctor
+
+      - name: Build docs
+        run: |
+          pnpm run docs-build
+
+      # https://github.com/crazy-max/ghaction-github-pages
+      - name: Deploy docs
+        if: success()
+        uses: crazy-max/ghaction-github-pages@v5
+        with:
+          allow_empty_commit: false
+          build_dir: docs/.vitepress/dist
+          fqdn: ulrichrappen.de
+          author: 'Ulrich Rappen <mail@ulrichrappen.de>'
+          committer: 'github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>'
+          # keep_history: false
+          # target_branch: gh-pages
+          jekyll: false
+          # verbose: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

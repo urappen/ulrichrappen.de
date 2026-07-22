@@ -1,0 +1,37 @@
+{
+  "name": "Dr. Ulrich Rappen",
+  "short_name": "Ulrich Rappen",
+  "description": "Kinder- und Jugendpsychiatrie, Psychotherapie",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fff",
+  "theme_color": "#6699cc",
+  "icons": [
+    {
+      "src": "/images/logo.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    }
+  ],
+  "categories": [
+    "medical",
+    "doctor"
+  ],
+  "scope": "https://ulrichrappen.de/",
+  "shortcuts": [
+    {
+      "name": "Dr. Ulrich Rappen",
+      "url": "/",
+      "description": "Kinder- und Jugendpsychiatrie, Psychotherapie"
+    },
+    {
+      "name": "Anrufen und Termin vereinbaren",
+      "url": "tel:+491713280286"
+    },
+    {
+      "name": "Visitenkarte herunterladen",
+      "url": "/vcards/Dr_Ulrich_Rappen.vcf"
+    }
+  ]
+}

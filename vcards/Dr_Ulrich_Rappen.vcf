@@ -1,0 +1,14 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Rappen;Ulrich;;Dr.;
+FN:Dr. Ulrich Rappen
+EMAIL;TYPE=work,internet,pref:mail@ulrichrappen.de
+TEL;TYPE=iphone,voice,cell,pref:+491713280286
+ADR;TYPE=work,pref:;;Mitteläckerring 39;Baden-Baden;;76532;Deutschland
+GEO:48.7912438,8.2287341
+URL;TYPE=work,pref:https://ulrichrappen.de/
+SOURCE:https://ulrichrappen.de/vcards/Dr_Ulrich_Rappen.vcf
+ORG-DIRECTORY:https://ulrichrappen.de/
+TZ:+0100
+REV:2025-08-31T21:30:00Z
+END:VCARD
